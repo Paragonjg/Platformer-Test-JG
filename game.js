@@ -53,7 +53,7 @@ function preload() {
     );
 
     // Load background music
-    this.load.audio('bgMusic', 'https://labs.phaser.io/assets/audio/cyber-city.mp3');
+    this.load.audio('bgMusic', 'https://cdn.jsdelivr.net/gh/photonstorm/phaser3-examples@master/public/assets/audio/title-theme.mp3');
 
     // Create rock platform texture
     const platformGraphics = this.add.graphics();
@@ -312,15 +312,23 @@ function create() {
         loop: true
     });
 
-    // Add background music
+      // Add background music
     try {
         backgroundMusic = this.sound.add('bgMusic', {
-            volume: 0.2,
+            volume: 0.15,  // Reduced volume
             loop: true
         });
-        backgroundMusic.play();
+        
+        // Add a click handler to start music on user interaction
+        this.input.once('pointerdown', () => {
+            try {
+                backgroundMusic.play();
+            } catch (error) {
+                console.log('Error playing music:', error);
+            }
+        });
     } catch (error) {
-        console.log('Error playing background music:', error);
+        console.log('Error setting up music:', error);
     }
 
     // Modify restart handler
